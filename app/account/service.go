@@ -6,11 +6,13 @@ type Service struct {
 }
 
 type repository interface {
+	save(*account) (bool, error)
 	findOne(id int) (*account, error)
 	findAllByRole(role string) ([]*account, error)
 }
 
 type roleRepository interface {
+	save(id int, role role) (bool, error)
 	findOne(id int) (role, error)
 }
 
