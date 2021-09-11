@@ -7,16 +7,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/pivovarit/hexagonal-go/app/account"
 	"github.com/pivovarit/hexagonal-go/app/config"
+	"github.com/pivovarit/hexagonal-go/app/controller"
 )
 
 type App struct {
-	router   *gin.Engine
-	config   *config.AppConfiguration
-	accounts *account.Service
+	router     *gin.Engine
+	config     *config.AppConfiguration
+	controller *controller.AccountController
 }
 
 func (a *App) Initialize() {
-	a.accounts = &account.Service{}
+	a.controller = controller.NewAccountController(&account.Service{})
 	a.router = gin.Default()
 	a.router.GET("/health", func(context *gin.Context) {
 		context.Header("Content-Type", "application/json")
