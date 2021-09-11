@@ -17,6 +17,7 @@ type App struct {
 }
 
 func (a *App) Initialize() {
+	a.config = &config.AppConfiguration{}
 	a.controller = controller.NewAccountController(&account.Service{})
 	a.router = gin.Default()
 	a.router.GET("/health", func(context *gin.Context) {

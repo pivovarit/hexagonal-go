@@ -1,22 +1,29 @@
 package account
 
 type Service struct {
-	accountRepository        repository
-	accountHistoryRepository historyRepository
+	accountRepository repository
+	roleRepository    roleRepository
 }
 
 type repository interface {
-	FindOne(id int) (*account, error)
+	findOne(id int) (*account, error)
+	findAllByRole(role string) ([]*account, error)
 }
 
-type historyRepository interface {
-	FindOne(id int) (*history, error)
+type roleRepository interface {
+	findOne(id int) (role, error)
 }
 
 func (s *Service) FindOne(id int) (*Account, error) {
-	result, err := s.accountRepository.FindOne(id)
+	account, err := s.accountRepository.findOne(id)
 	if err != nil {
 		return nil, err
 	}
-	return ConvertToPublic(result), nil
+
+	role, err := s.roleRepository.findOne(account.id)
+	if err != nil {
+		return nil, err
+	}
+
+	return ConvertToPublic(account, role), nil
 }
