@@ -6,10 +6,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/pivovarit/hexagonal-go/app/account"
+	"github.com/pivovarit/hexagonal-go/app/config"
 )
 
 type App struct {
 	router   *gin.Engine
+	config   *config.AppConfiguration
 	accounts *account.AccountService
 }
 
