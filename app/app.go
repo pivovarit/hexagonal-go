@@ -1,19 +1,25 @@
 package app
 
 import (
+	"encoding/json"
 	"fmt"
+
 	"github.com/gin-gonic/gin"
+	"github.com/pivovarit/hexagonal-go/app/account"
 )
 
 type App struct {
-	router *gin.Engine
+	router   *gin.Engine
+	accounts *account.AccountService
 }
 
 func (a *App) Initialize() {
+	a.accounts = &account.AccountService{}
 	a.router = gin.Default()
 	a.router.GET("/health", func(context *gin.Context) {
 		context.Header("Content-Type", "application/json")
-		_, _ = context.Writer.Write([]byte(`{"status": "UP"}`))
+		response, _ := json.Marshal(map[string]interface{}{"status": "UP"})
+		_, _ = context.Writer.Write(response)
 	})
 }
 
