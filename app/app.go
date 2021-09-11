@@ -12,11 +12,11 @@ import (
 type App struct {
 	router   *gin.Engine
 	config   *config.AppConfiguration
-	accounts *account.AccountService
+	accounts *account.Service
 }
 
 func (a *App) Initialize() {
-	a.accounts = &account.AccountService{}
+	a.accounts = &account.Service{}
 	a.router = gin.Default()
 	a.router.GET("/health", func(context *gin.Context) {
 		context.Header("Content-Type", "application/json")
