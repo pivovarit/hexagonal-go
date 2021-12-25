@@ -3,12 +3,11 @@ package account
 type role string
 
 type account struct {
-	id      int
-	name    string
-	surname string
+	id   int
+	name string
 }
 
 type history struct {
-	id int
+	id      int
 	history string
 }

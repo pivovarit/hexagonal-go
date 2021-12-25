@@ -29,3 +29,14 @@ func (s *Service) FindOne(id int) (*Account, error) {
 
 	return ConvertToPublic(account, role), nil
 }
+
+func (s *Service) CreateAccount(request CreateAccountRequest) (bool, error) {
+	result, err := s.accountRepository.save(&account{
+		id:   request.Id,
+		name: request.Name,
+	})
+	if err != nil {
+		return false, err
+	}
+	return result, nil
+}
